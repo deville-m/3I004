@@ -51,7 +51,7 @@ sumtab:
 #	Get the mean of a int array		#
 #	Note that last must be -1		#
 #	Param: a0 => int *tab			#
-#	To save before call: v0, ra		#
+#	To save before call: a0, v0, ra	#
 #####################################
 arimean:
 	addiu $sp, $sp, -12
