@@ -5,6 +5,7 @@
 	n: .word 0x5432ABCD
 
 .text
+.globl main
 
 main:
 	la $4, n

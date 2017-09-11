@@ -1,4 +1,5 @@
 .text
+.globl main
 
 main:
 	ori $5, $0, 0
