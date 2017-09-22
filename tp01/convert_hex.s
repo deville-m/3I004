@@ -9,19 +9,19 @@
 
 main:
 	la $4, n
-	lw $4, ($4)
-	la $5, table
+	lw $4, ($4) # int n
+	la $5, table # char *table
 	la $6, string
-	addi $6, $6, 2
-	ori $8, $8, 32
+	addiu $6, $6, 2 #  char *p = string + 2
+	ori $8, $8, 32 # int i = 32;
 	loop:
-		addi $8, $8, -4
+		addiu $8, $8, -4 # i -= 4
 		srav $9, $4, $8
-		andi $9, $9, 0x0F
-		add $10, $5, $9
-		lb $10, ($10)
-		sb $10, ($6)
-		addi $6, $6, 1
+		andi $9, $9, 0x0F # q = (n >> i) & 0x0F
+		addu $10, $5, $9 # table + q
+		lb $10, ($10) # *(table + q)
+		sb $10, ($6) # *p = $10
+		addiu $6, $6, 1 # p++
 		bgtz $8, loop
-	ori $2, $0, 10
+	ori $2, $0, 10 # exit
 	syscall
