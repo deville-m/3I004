@@ -16,7 +16,7 @@ main:
 	ori $8, $8, 32 # int i = 32;
 	loop:
 		addiu $8, $8, -4 # i -= 4
-		srav $9, $4, $8
+		srlv $9, $4, $8
 		andi $9, $9, 0x0F # q = (n >> i) & 0x0F
 		addu $10, $5, $9 # table + q
 		lb $10, ($10) # *(table + q)
@@ -25,3 +25,4 @@ main:
 		bgtz $8, loop
 	ori $2, $0, 10 # exit
 	syscall
+

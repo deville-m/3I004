@@ -5,72 +5,13 @@
 .text
 .globl main
 
-#####################################
-#	Get the size of a int array		#
-#	Note that last must be -1		#
-#	Param: a0 => int *tab			#
-#	To save before call: a0, v0, ra	#
-#####################################
-sizetab:
-	addiu $sp, $sp, -4
-	sw $s0, ($sp)
-	lui $v0, 0
-	loop:
-		lw $s0, ($a0)
-		bltz $s0, end
-		addiu $a0, $a0, 4
-		addiu $v0, $v0, 1
-		j loop
-	end:
-	lw $s0, ($sp)
-	addiu $sp, $sp, 4
-	jr $ra
-
-#####################################
-#	Get the sum of a int array		#
-#	Note that last must be -1		#
-#	Param: a0 => int *tab			#
-#	To save before call: a0, v0, ra	#
-#####################################
-sumtab:
-	addiu $sp, $sp, -4
-	sw $s0, ($sp)
-	lui $v0, 0
-	loop2:
-		lw $s0, ($a0)
-		bltz $s0, end2
-		addiu $a0, $a0, 4
-		addu $v0, $v0, $s0
-		j loop2
-	end2:
-	lw $s0, ($sp)
-	addiu $sp, $sp, 4
-	jr $ra
-
-#####################################
-#	Get the mean of a int array		#
-#	Note that last must be -1		#
-#	Param: a0 => int *tab			#
-#	To save before call: a0, v0, ra	#
-#####################################
-arimean:
-	addiu $sp, $sp, -12
-	sw $a0, 0($sp)
-	sw $ra, 4($sp)
-	sw $s0, 8($sp)
-	jal sizetab
-	ori $s0, $v0, 0
-	lw $a0, 0($sp)
-	jal sumtab
-	lw $ra, 4($sp)
-	divu $v0, $s0
-	mflo $v0
-	lw $s0, 8($sp)
-	addiu $sp, $sp, 12
-	jr $ra
-
-
 main:
+	# na = 1, nr = 1, nv = 0
+	#prologue
+	addiu $sp, $sp, -8
+	sw $ra, 4($sp)
+
+	#corps de main
 	ori $a0, $zero, ' '
 	ori $v0, $zero, 11
 	syscall
@@ -84,3 +25,88 @@ main:
 	syscall
 	ori $v0, $zero, 10
 	syscall
+
+	#epilogue
+	lw $ra, 4($sp)
+	addiu $sp, $sp, 8
+
+#######################
+#	Moyenne de int array	       #
+#	Note last elem =  -1		       #
+#	Param: a0 => int *tab	       #
+#	na = 1, nr = 1, nv = 1	       #
+#######################
+arimean:
+	#prologue
+	addiu $sp, $sp, -12
+	sw $s0, 0($sp)
+	sw $ra, 4($sp)
+	
+	#corps de arimean
+	jal sizetab
+	ori $s0, $v0, 0
+	jal sumtab
+	divu $v0, $s0
+	mflo $v0
+
+	#epilogue
+	lw $ra, 4($sp)
+	lw $s0, 0($sp)
+	addiu $sp, $sp, 12
+	jr $ra
+
+#######################
+#	Taille de int array		       #
+#	Note last elem = -1		       #
+#	Param: a0 => int *tab	       #
+#	na = 0, nr = 1, nv = 0	       #
+#######################
+sizetab:
+	#prologue
+	addiu $sp, $sp, -4
+	sw $ra, 0($sp)
+	sw $a0, 4($sp)
+
+	#corps de strlen
+	addiu $v0, $zero, 0
+	loop:
+		lw $t0, 0($a0)
+		bltz $t0, end
+		addiu $a0, $a0, 4
+		addiu $v0, $v0, 1
+		j loop
+	end:
+	
+	#epilogue
+	lw $a0, 4($sp)
+	lw $ra, 0($sp)
+	addiu $sp, $sp, 4
+	jr $ra
+
+#######################
+#	Somme de int array		       #
+#	Note that last must be -1	       #
+#	Param: a0 => int *tab	       #
+#	na = 0, nr = 1, nv = 0             #
+#######################
+sumtab:
+	#prologue
+	addiu $sp, $sp, -4
+	sw $ra, 4($sp)
+	sw $a0, 0($sp)
+
+	#corps de sumtab
+	ori $v0, $zero, 0
+	loop2:
+		lw $t0, ($a0)
+		bltz $t0, end2
+		addiu $a0, $a0, 4
+		addu $v0, $v0, $t0
+		j loop2
+	end2:
+
+	#epilogue
+	lw $a0, 0($sp)
+	lw $ra, 4($sp)
+	addiu $sp, $sp, 4
+	jr $ra

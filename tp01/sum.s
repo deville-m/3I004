@@ -1,11 +1,12 @@
 .data
-
 	var1: .word 15
 	var2: .word 17
 	var3: .space 4
 
 .text
+
 .globl main
+
 main:
 
 	la $8, var1
