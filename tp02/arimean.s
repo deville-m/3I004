@@ -30,12 +30,12 @@ main:
 	lw $ra, 4($sp)
 	addiu $sp, $sp, 8
 
-#######################
-#	Moyenne de int array	       #
-#	Note last elem =  -1		       #
-#	Param: a0 => int *tab	       #
-#	na = 1, nr = 1, nv = 1	       #
-#######################
+############################
+#   Moyenne de int array   #
+#   Note last elem = -1    #
+#   Param: a0 => int *tab  #
+#   na = 1, nr = 1, nv = 1 #
+############################
 arimean:
 	#prologue
 	addiu $sp, $sp, -12
@@ -55,12 +55,12 @@ arimean:
 	addiu $sp, $sp, 12
 	jr $ra
 
-#######################
-#	Taille de int array		       #
-#	Note last elem = -1		       #
-#	Param: a0 => int *tab	       #
-#	na = 0, nr = 1, nv = 0	       #
-#######################
+############################
+#   Taille de int array    #
+#   Note last elem = -1    #
+#   Param: a0 => int *tab  #
+#   na = 0, nr = 1, nv = 0 #
+############################
 sizetab:
 	#prologue
 	addiu $sp, $sp, -4
@@ -83,12 +83,12 @@ sizetab:
 	addiu $sp, $sp, 4
 	jr $ra
 
-#######################
-#	Somme de int array		       #
-#	Note that last must be -1	       #
-#	Param: a0 => int *tab	       #
-#	na = 0, nr = 1, nv = 0             #
-#######################
+###############################
+#   Somme de int array        #
+#   Note that last must be -1 #
+#   Param: a0 => int *tab     #
+#   na = 0, nr = 1, nv = 0    #
+###############################
 sumtab:
 	#prologue
 	addiu $sp, $sp, -4
