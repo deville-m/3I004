@@ -13,7 +13,7 @@ main:
 	ori $a0, $v0, 0
 	ori $v0, $zero, 1
 	syscall
-	ori $a0, $zero, 10
+	ori $a0, $zero, '\n'
 	ori $v0, $zero, 11
 	syscall
 	ori $v0, $zero, 10
@@ -27,7 +27,7 @@ main:
 #   Calculate factorial of a0  #
 #   Note : 0 <= a0 <= 13       #
 #   Params : a0 => fact(a0)    #
-#   na = 1, nr = 2, nv = 1     #
+#   na = 1, nr = 2, nv = 0     #
 ################################
 factorial:
 	#prologue

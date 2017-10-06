@@ -29,22 +29,26 @@ main:
 	#epilogue
 	lw $ra, 4($sp)
 	addiu $sp, $sp, 8
+	
+	jr $ra
 
 ############################
 #   Moyenne de int array   #
 #   Note last elem = -1    #
 #   Param: a0 => int *tab  #
-#   na = 1, nr = 1, nv = 1 #
+#   na = 1, nr = 1, nv = 0 #
 ############################
 arimean:
 	#prologue
 	addiu $sp, $sp, -12
-	sw $s0, 0($sp)
-	sw $ra, 4($sp)
-	
+	sw $s0, 4($sp)
+	sw $ra, 8($sp)
+	sw $4, 12($29)
+
 	#corps de arimean
 	jal sizetab
 	ori $s0, $v0, 0
+	lw $4, 12($29)
 	jal sumtab
 	divu $v0, $s0
 	mflo $v0
@@ -65,7 +69,6 @@ sizetab:
 	#prologue
 	addiu $sp, $sp, -4
 	sw $ra, 0($sp)
-	sw $a0, 4($sp)
 
 	#corps de strlen
 	addiu $v0, $zero, 0
@@ -78,7 +81,6 @@ sizetab:
 	end:
 	
 	#epilogue
-	lw $a0, 4($sp)
 	lw $ra, 0($sp)
 	addiu $sp, $sp, 4
 	jr $ra
@@ -92,8 +94,8 @@ sizetab:
 sumtab:
 	#prologue
 	addiu $sp, $sp, -4
-	sw $ra, 4($sp)
-	sw $a0, 0($sp)
+	sw $ra, 0($sp)
+	sw $a0, 4($sp)
 
 	#corps de sumtab
 	ori $v0, $zero, 0
@@ -106,7 +108,7 @@ sumtab:
 	end2:
 
 	#epilogue
-	lw $a0, 0($sp)
-	lw $ra, 4($sp)
+	lw $a0, 4($sp)
+	lw $ra, 0($sp)
 	addiu $sp, $sp, 4
 	jr $ra
