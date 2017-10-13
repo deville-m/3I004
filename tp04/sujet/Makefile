@@ -24,8 +24,6 @@ APP_CFLAGS = -Wall -ffreestanding -mno-gpopt -mips32 -I$(APP_PATH) -I.
 
 all: sys.bin app.bin
 
-## system compilation
-
 sys.bin : sys.ld $(SYS_OBJS)
 	mipsel-unknown-elf-ld -o $@ -T $^
 
