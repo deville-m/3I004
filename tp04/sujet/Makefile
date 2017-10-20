@@ -52,5 +52,5 @@ sys.bin.txt : sys.bin
 	mipsel-unknown-elf-objdump -D $< > $@
 
 clean:
-	rm -f *.o *.bin proc0*
+	rm -f *.o *.bin proc0* *.txt
 
